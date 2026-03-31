@@ -1,13 +1,29 @@
 # FakeStore ETL Pipeline 🚀
 
-API → PostgreSQL in 30 seconds
+**Automated ETL: FakeStore API → PostgreSQL**
 
-## Tech:
-Python | Pandas | PostgreSQL | APIs
+## Tech Stack:
+Python | Requests | psycopg2 | PostgreSQL | Logging
 
-## What it does:
-- Fetch FakeStore API products
-- Clean with Pandas
-- Save to PostgreSQL
+## Pipeline Steps:
+- **Extract:** Fetch products from FakeStore API
+- **Transform:** Validate + clean + format data
+- **Load:** Insert to PostgreSQL (no duplicates)
 
+## Features:
+- ✅ Full error handling
+- ✅ Data validation
+- ✅ Duplicate prevention (ON CONFLICT)
+- ✅ Automated logging to stor.log
+- ✅ Secure password via ENV variable
+
+## Run:
+```bash
+pip install requests psycopg2-binary
+python etl_pipeline.py
+```
+
+**Result:** 20 clean products loaded in seconds!
+
+---
 Portfolio by Oussama | Data Engineer
