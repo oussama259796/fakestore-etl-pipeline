@@ -1,29 +1,27 @@
-# FakeStore ETL Pipeline 🚀
+# FakeStore Dockerized ETL Pipeline 🚀
 
-**Automated ETL: FakeStore API → PostgreSQL**
+**Automated ETL: FakeStore API → Pandas → PostgreSQL (Docker)**
 
 ## Tech Stack:
-Python | Requests | psycopg2 | PostgreSQL | Logging
+Python | Pandas | SQLAlchemy | PostgreSQL | Docker | Dotenv (`.env`) | UV ⚡
 
 ## Pipeline Steps:
-- **Extract:** Fetch products from FakeStore API
-- **Transform:** Validate + clean + format data
-- **Load:** Insert to PostgreSQL (no duplicates)
+- **Step 0 (Bridge Check):** The code checks the database connection in Docker first. If it's down, it stops immediately to save server resources (Fail-Fast).
+- **Extract:** Fetch products from FakeStore API.
+- **Transform:** Use Pandas to clean and flatten nested JSON (separating rating into `rate` and `cnt`).
+- **Load:** Insert clean data to PostgreSQL inside Docker (no fake dummy data added during local tests).
 
 ## Features:
-- ✅ Full error handling
-- ✅ Data validation
-- ✅ Duplicate prevention (ON CONFLICT)
-- ✅ Automated logging to stor.log
-- ✅ Secure password via ENV variable
+- ✅ Fully Containerized via Docker
+- ✅ High Data Cleanliness & Validation
+- ✅ Zero Hardcoded Credentials (via `.env`)
+- ✅ Automated logging to `etl_pipeline.log` and `load_product.log`
+- ✅ Powered by **UV** for lightning-fast dependency management
 
 ## Run:
 ```bash
-pip install requests psycopg2-binary
-python etl_pipeline.py
-```
+# 1. Start the database container
+docker-compose up -d
 
-**Result:** 20 clean products loaded in seconds!
-
----
-Portfolio by Oussama | Data Engineer
+# 2. Run the pipeline instantly with UV
+uv run main.py
